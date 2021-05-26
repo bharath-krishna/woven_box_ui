@@ -36,7 +36,7 @@ function CustomAppBar({ handlogout }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Welcome
+            Woven Box
           </Typography>
           <Button color="inherit" onClick={handlogout}>
             Logout

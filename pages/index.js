@@ -1,16 +1,9 @@
 import {
-  Avatar,
   Button,
   Card,
   CardContent,
   Container,
-  Divider,
   Grid,
-  Icon,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
   makeStyles,
   Slide,
   Snackbar,
@@ -18,11 +11,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import axios from "axios";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import CustomAppBar from "../components/CustomAppBar";
-import ImageIcon from "@material-ui/icons/Image";
 import FileList from "../components/FileList";
 import { Alert } from "@material-ui/lab";
 
@@ -57,7 +48,7 @@ function index() {
 
   const getFiles = () => {
     const resp = axios
-      .get("http://localhost:8088/api/uploads")
+      .get(`${process.env.NEXT_PUBLIC_API_HOST}/api/uploads`)
       .then((res) => {
         setFiles(res.data.filenames);
       })
@@ -67,23 +58,21 @@ function index() {
   };
 
   const onSubmit = async (data) => {
-    if (data.filename[0]) {
-      const formData = new FormData();
-      formData.append("uploaded_files", data.filename[0]);
+    const formData = new FormData();
+    formData.append("uploaded_files", data.filename[0]);
 
-      const resp = await axios
-        .post("http://localhost:8088/api/uploads", formData)
-        .then((res) => {
-          if (res.status == 200) {
-            showMessage("Upload Successful");
-            reset();
-            getFiles();
-          }
-        })
-        .catch((err) => {
-          console.log("error", err);
-        });
-    }
+    const resp = await axios
+      .post(`${process.env.NEXT_PUBLIC_API_HOST}/api/uploads`, formData)
+      .then((res) => {
+        if (res.status == 200) {
+          showMessage("Upload Successful");
+          reset();
+          getFiles();
+        }
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
   };
 
   function TransitionRight(props) {
@@ -105,6 +94,15 @@ function index() {
     setOpen(false);
   };
 
+  const handleFilter = (e) => {
+    const searchName = e.target.value;
+    if (searchName != "") {
+      setFiles(files.filter((name) => name.includes(searchName)));
+    } else {
+      getFiles();
+    }
+  };
+
   return (
     <React.Fragment>
       <CustomAppBar />
@@ -119,19 +117,28 @@ function index() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={7}>
+          <Grid item xs={12} sm={6}>
             {/* <Card className={classes.fileListCard}>
               <CardContent> */}
+            <TextField
+              name="searchName"
+              variant="outlined"
+              placeholder="Search Files"
+              size="small"
+              onChange={handleFilter}
+              fullWidth
+            />
             <FileList files={files} getFiles={getFiles} />
             {/* </CardContent>
             </Card> */}
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={4}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <input
                 {...register("filename")}
                 type="file"
                 className={classes.input}
+                required
               />
               <Button type="submit">Upload</Button>
             </form>
