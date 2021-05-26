@@ -39,18 +39,23 @@ const useStyles = makeStyles(() => ({
   leftCard: {
     display: "flex",
   },
+  fileListCard: {},
 }));
 
 function index() {
   const classes = useStyles();
   const { register, handleSubmit, reset } = useForm();
-  const [files, setFiles] = useState();
+  const [files, setFiles] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [transition, setTransition] = React.useState(undefined);
   const [severity, setSeverity] = useState("success");
   const [transactionMessage, setTransactionMessage] = useState("");
 
   useEffect(() => {
+    getFiles();
+  }, [open]);
+
+  const getFiles = () => {
     const resp = axios
       .get("http://localhost:8088/api/uploads")
       .then((res) => {
@@ -59,7 +64,7 @@ function index() {
       .catch((err) => {
         console.log("error", err);
       });
-  }, [open]);
+  };
 
   const onSubmit = async (data) => {
     if (data.filename[0]) {
@@ -80,14 +85,14 @@ function index() {
     }
   };
 
-  function TransitionLeft(props) {
-    return <Slide {...props} direction="left" />;
+  function TransitionRight(props) {
+    return <Slide {...props} direction="right" />;
   }
 
   const showMessage = (msg, severity) => {
     setSeverity(severity);
     setTransactionMessage(msg);
-    setTransition(() => TransitionLeft);
+    setTransition(() => TransitionRight);
     setOpen(true);
   };
 
@@ -114,9 +119,9 @@ function index() {
             </Card>
           </Grid>
           <Grid item xs={12} sm={7}>
-            <Card>
+            <Card className={classes.fileListCard}>
               <CardContent>
-                <FileList files={files} />
+                <FileList files={files} getFiles={getFiles} />
               </CardContent>
             </Card>
           </Grid>
