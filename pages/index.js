@@ -53,7 +53,7 @@ function index() {
 
   useEffect(() => {
     getFiles();
-  }, [open]);
+  }, []);
 
   const getFiles = () => {
     const resp = axios
@@ -77,6 +77,7 @@ function index() {
           if (res.status == 200) {
             showMessage("Upload Successful");
             reset();
+            getFiles();
           }
         })
         .catch((err) => {
@@ -119,11 +120,11 @@ function index() {
             </Card>
           </Grid>
           <Grid item xs={12} sm={7}>
-            <Card className={classes.fileListCard}>
-              <CardContent>
-                <FileList files={files} getFiles={getFiles} />
-              </CardContent>
-            </Card>
+            {/* <Card className={classes.fileListCard}>
+              <CardContent> */}
+            <FileList files={files} getFiles={getFiles} />
+            {/* </CardContent>
+            </Card> */}
           </Grid>
           <Grid item xs={12} sm={3}>
             <form onSubmit={handleSubmit(onSubmit)}>
