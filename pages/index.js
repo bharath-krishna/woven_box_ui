@@ -54,9 +54,14 @@ function index({ files, setFiles }) {
     getFiles();
   }, []);
 
-  const getFiles = () => {
+  const getFiles = async () => {
+    const config = {
+      headers: {
+        Authorization: await authUser.getIdToken(),
+      },
+    };
     const resp = axios
-      .get(`${process.env.NEXT_PUBLIC_API_HOST}/api/uploads`)
+      .get(`${process.env.NEXT_PUBLIC_API_HOST}/api/uploads`, config)
       .then((res) => {
         setFiles(res.data.filenames);
       })
@@ -69,8 +74,13 @@ function index({ files, setFiles }) {
     const formData = new FormData();
     formData.append("uploaded_files", data.filename[0]);
 
+    const config = {
+      headers: {
+        Authorization: await authUser.getIdToken(),
+      },
+    };
     const resp = await axios
-      .post(`${process.env.NEXT_PUBLIC_API_HOST}/api/uploads`, formData)
+      .post(`${process.env.NEXT_PUBLIC_API_HOST}/api/uploads`, formData, config)
       .then((res) => {
         if (res.status == 200) {
           showMessage("Upload Successful");

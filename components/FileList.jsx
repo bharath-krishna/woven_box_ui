@@ -15,11 +15,16 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { setFiles } from "../redux/actions/files";
 
-function FileList({ files, setFiles, getFiles }) {
-  const handleDelete = (name) => {
-    console.log(name);
+function FileList({ files, getFiles }) {
+  const authUser = useAuthUser();
+  const handleDelete = async (name) => {
+    const config = {
+      headers: {
+        Authorization: await authUser.getIdToken(),
+      },
+    };
     const resp = axios
-      .delete(`http://localhost:8088/api/uploads?filename=${name}`)
+      .delete(`http://localhost:8088/api/uploads?filename=${name}`, config)
       .then((res) => {
         console.log(res);
         if (res.status == 200) {
