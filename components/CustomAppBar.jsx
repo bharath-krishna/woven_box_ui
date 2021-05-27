@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import MenuIcon from "@material-ui/icons/Menu";
+import { useAuthUser } from "next-firebase-auth";
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CustomAppBar({ handlogout }) {
+function CustomAppBar({ user }) {
   const classes = useStyles();
   return (
     <div className={classes.appbar}>
@@ -38,7 +39,7 @@ function CustomAppBar({ handlogout }) {
           <Typography variant="h6" className={classes.title}>
             Woven Box
           </Typography>
-          <Button color="inherit" onClick={handlogout}>
+          <Button color="inherit" onClick={user.signOut}>
             Logout
           </Button>
         </Toolbar>

@@ -18,6 +18,12 @@ import FileList from "../components/FileList";
 import { Alert } from "@material-ui/lab";
 import { connect } from "react-redux";
 import { setFiles } from "../redux/actions/files";
+import {
+  authAction,
+  useAuthUser,
+  withAuthUser,
+} from "../utils/NextFirebaseAuth";
+import FullPageLoader from "../components/FullPageLoader";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -36,6 +42,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function index({ files, setFiles }) {
+  const authUser = useAuthUser();
   const classes = useStyles();
   const { register, handleSubmit, reset } = useForm();
   const [open, setOpen] = React.useState(false);
@@ -106,7 +113,7 @@ function index({ files, setFiles }) {
 
   return (
     <React.Fragment>
-      <CustomAppBar />
+      <CustomAppBar user={authUser} />
       <Container className={classes.container}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={2}>
@@ -119,8 +126,6 @@ function index({ files, setFiles }) {
             </Card>
           </Grid>
           <Grid item xs={12} sm={6}>
-            {/* <Card className={classes.fileListCard}>
-              <CardContent> */}
             <TextField
               name="searchName"
               variant="outlined"
@@ -130,8 +135,6 @@ function index({ files, setFiles }) {
               fullWidth
             />
             <FileList getFiles={getFiles} />
-            {/* </CardContent>
-            </Card> */}
           </Grid>
           <Grid item xs={12} sm={4}>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -180,4 +183,11 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(index);
+export default withAuthUser({
+  whenUnauthedBeforeInit: authAction.SHOW_LOADER,
+  whenUnauthedAfterInit: authAction.REDIRECT_TO_LOGIN,
+  whenUnauthed: authAction.REDIRECT_TO_LOGIN,
+  LoaderComponent: () => {
+    return <FullPageLoader />;
+  },
+})(connect(mapStateToProps, mapDispatchToProps)(index));
