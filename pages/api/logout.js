@@ -1,4 +1,4 @@
-import initAuth from "../../utils/initAuth"; // the module you created above
+import initAuth from "../../utils/initAuth";
 import { unsetAuthCookies } from "../../utils/NextFirebaseAuth";
 
 initAuth();
