@@ -16,6 +16,8 @@ import { useForm } from "react-hook-form";
 import CustomAppBar from "../components/CustomAppBar";
 import FileList from "../components/FileList";
 import { Alert } from "@material-ui/lab";
+import { connect } from "react-redux";
+import { setFiles } from "../redux/actions/files";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -33,10 +35,9 @@ const useStyles = makeStyles(() => ({
   fileListCard: {},
 }));
 
-function index() {
+function index({ files, setFiles }) {
   const classes = useStyles();
   const { register, handleSubmit, reset } = useForm();
-  const [files, setFiles] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [transition, setTransition] = React.useState(undefined);
   const [severity, setSeverity] = useState("success");
@@ -128,7 +129,7 @@ function index() {
               onChange={handleFilter}
               fullWidth
             />
-            <FileList files={files} getFiles={getFiles} />
+            <FileList getFiles={getFiles} />
             {/* </CardContent>
             </Card> */}
           </Grid>
@@ -167,4 +168,16 @@ export const getServerSideProps = async ({ req, res }) => {
   };
 };
 
-export default index;
+function mapStateToProps(state) {
+  return {
+    files: state.files,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setFiles: (files) => dispatch(setFiles(files)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(index);

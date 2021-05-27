@@ -3,7 +3,7 @@ import { applyMiddleware, createStore } from "redux";
 import { createWrapper } from "next-redux-wrapper";
 import { combineReducers } from "redux";
 import thunkMiddleware from "redux-thunk";
-import { profileReducer } from "./reducers/profile";
+import { filesReducer } from "./reducers/files";
 
 const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== "production") {
@@ -13,7 +13,7 @@ const bindMiddleware = (middleware) => {
   return applyMiddleware(...middleware);
 };
 
-const allReducers = combineReducers({ profile: profileReducer });
+const allReducers = combineReducers({ files: filesReducer });
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {

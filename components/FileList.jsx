@@ -13,8 +13,10 @@ import { Fragment } from "react";
 import ImageIcon from "@material-ui/icons/Image";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
+import { connect } from "react-redux";
+import { setFiles } from "../redux/actions/files";
 
-function FileList({ files, getFiles }) {
+function FileList({ files, setFiles, getFiles }) {
   const handleDelete = (name) => {
     console.log(name);
     const resp = axios
@@ -65,4 +67,16 @@ function FileList({ files, getFiles }) {
   );
 }
 
-export default FileList;
+function mapStateToProps(state) {
+  return {
+    files: state.files,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setFiles: (files) => dispatch(setFiles(files)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FileList);
