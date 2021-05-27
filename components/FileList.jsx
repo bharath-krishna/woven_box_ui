@@ -14,13 +14,14 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
 import { connect } from "react-redux";
 import { setFiles } from "../redux/actions/files";
+import { useAuthUser } from "../utils/NextFirebaseAuth";
 
 function FileList({ files, getFiles }) {
   const authUser = useAuthUser();
   const handleDelete = async (name) => {
     const config = {
       headers: {
-        Authorization: await authUser.getIdToken(),
+        Authorization: `Bearer ${await authUser.getIdToken()}`,
       },
     };
     const resp = axios

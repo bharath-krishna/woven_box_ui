@@ -57,7 +57,7 @@ function index({ files, setFiles }) {
   const getFiles = async () => {
     const config = {
       headers: {
-        Authorization: await authUser.getIdToken(),
+        Authorization: `Bearer ${await authUser.getIdToken()}`,
       },
     };
     const resp = axios
@@ -76,7 +76,7 @@ function index({ files, setFiles }) {
 
     const config = {
       headers: {
-        Authorization: await authUser.getIdToken(),
+        Authorization: `Bearer ${await authUser.getIdToken()}`,
       },
     };
     const resp = await axios
