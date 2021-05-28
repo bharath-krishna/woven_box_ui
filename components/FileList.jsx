@@ -25,7 +25,7 @@ function FileList({ files, getFiles }) {
       },
     };
     const resp = axios
-      .delete(`http://localhost:8088/api/uploads?filename=${name}`, config)
+      .delete(`http://localhost:8088/api/uploads/${name}`, config)
       .then((res) => {
         console.log(res);
         if (res.status == 200) {
