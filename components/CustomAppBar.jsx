@@ -9,6 +9,8 @@ import {
 import React from "react";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useAuthUser } from "next-firebase-auth";
+import { connect } from "react-redux";
+import { logoutUser } from "../redux/actions/files";
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
@@ -22,8 +24,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CustomAppBar({ user }) {
+function CustomAppBar({ logoutUser }) {
+  const user = useAuthUser();
   const classes = useStyles();
+
+  const handleLogout = () => {
+    logoutUser();
+    user.signOut();
+  };
+
   return (
     <div className={classes.appbar}>
       <AppBar>
@@ -39,7 +48,7 @@ function CustomAppBar({ user }) {
           <Typography variant="h6" className={classes.title}>
             Woven Box
           </Typography>
-          <Button color="inherit" onClick={user.signOut}>
+          <Button color="inherit" onClick={handleLogout}>
             Logout
           </Button>
         </Toolbar>
@@ -49,4 +58,14 @@ function CustomAppBar({ user }) {
   );
 }
 
-export default CustomAppBar;
+function mapStateToProps(state) {
+  return {};
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    logoutUser: () => dispatch(logoutUser()),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomAppBar);

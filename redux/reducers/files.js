@@ -1,6 +1,7 @@
-import { SET_FILES } from "../constants";
+import { SET_FILES, RESET_FILES } from "../constants";
 
 const initialFilesState = [];
+
 export const filesReducer = (state = initialFilesState, action) => {
   switch (action.type) {
     case SET_FILES: {
