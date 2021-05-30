@@ -13,10 +13,10 @@ import ImageIcon from "@material-ui/icons/Image";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
 import { connect } from "react-redux";
-import { setFiles } from "../redux/actions/files";
+import { deleteFile, setFiles } from "../redux/actions/files";
 import { useAuthUser } from "../utils/NextFirebaseAuth";
 
-function FileList({ files, getFiles }) {
+function FileList({ files, getFiles, deleteFile }) {
   const authUser = useAuthUser();
   const handleDelete = async (name) => {
     const config = {
@@ -27,9 +27,8 @@ function FileList({ files, getFiles }) {
     const resp = axios
       .delete(`${process.env.NEXT_PUBLIC_API_HOST}/api/uploads/${name}`, config)
       .then((res) => {
-        console.log(res);
         if (res.status == 200) {
-          getFiles();
+          deleteFile(name);
         }
       })
       .catch((err) => {
@@ -81,6 +80,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     setFiles: (files) => dispatch(setFiles(files)),
+    deleteFile: (file) => dispatch(deleteFile(file)),
   };
 }
 
