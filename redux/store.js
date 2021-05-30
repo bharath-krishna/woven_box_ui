@@ -3,7 +3,8 @@ import { applyMiddleware, createStore } from "redux";
 import { createWrapper } from "next-redux-wrapper";
 import { combineReducers } from "redux";
 import thunkMiddleware from "redux-thunk";
-import { profileReducer } from "./reducers/profile";
+import { filesReducer } from "./reducers/files";
+import { USER_LOGOUT } from "./constants";
 
 const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== "production") {
@@ -12,8 +13,15 @@ const bindMiddleware = (middleware) => {
   }
   return applyMiddleware(...middleware);
 };
+const appReducer = combineReducers({ files: filesReducer });
 
-const allReducers = combineReducers({ profile: profileReducer });
+const rootReducer = (state, action) => {
+  if (action.type === USER_LOGOUT) {
+    return appReducer(undefined, action);
+  }
+
+  return appReducer(state, action);
+};
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
@@ -24,7 +32,7 @@ const reducer = (state, action) => {
     if (state.count.count) nextState.count.count = state.count.count; // preserve count value on client side navigation
     return nextState;
   } else {
-    return allReducers(state, action);
+    return rootReducer(state, action);
   }
 };
 
