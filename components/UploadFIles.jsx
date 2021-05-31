@@ -89,14 +89,16 @@ function UploadFIles({ files, addFiles }) {
           ref={inputRef}
           multiple
         />
+        <Button onClick={() => inputRef.current.click()} variant="contained">
+          Select File(s)
+        </Button>
         <Button
-          onClick={() => inputRef.current.click()}
+          onClick={() => handleUpload()}
           variant="contained"
           color="primary"
         >
-          Pick File(s)
+          Upload
         </Button>
-        <Button onClick={() => handleUpload()}>Upload</Button>
         <Button onClick={() => handleClear()}>Clear</Button>
         <List>
           {selectedFiles.map((file, index) => {

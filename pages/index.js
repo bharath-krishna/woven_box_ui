@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomAppBar from "../components/CustomAppBar";
 import FileList from "../components/FileList";
 import { Alert } from "@material-ui/lab";

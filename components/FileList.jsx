@@ -1,4 +1,5 @@
 import {
+  Button,
   Divider,
   IconButton,
   List,
@@ -6,8 +7,9 @@ import {
   ListItemAvatar,
   ListItemSecondaryAction,
   ListItemText,
+  Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import { Fragment } from "react";
 import ImageIcon from "@material-ui/icons/Image";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -15,9 +17,14 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { deleteFile, setFiles } from "../redux/actions/files";
 import { useAuthUser } from "../utils/NextFirebaseAuth";
+import FileDisplayDialog from "./FileDisplayDialog";
 
-function FileList({ files, getFiles, deleteFile }) {
+function FileList({ files, deleteFile }) {
   const authUser = useAuthUser();
+  const [openDialog, setOpenDialog] = useState(false);
+  const [fileUrl, setFileUrl] = useState();
+  const [fileTitle, setFileTitle] = useState();
+
   const handleDelete = async (name) => {
     const config = {
       headers: {
@@ -36,6 +43,11 @@ function FileList({ files, getFiles, deleteFile }) {
       });
   };
 
+  const handleDialogOpen = (name) => {
+    setFileUrl(`${process.env.NEXT_PUBLIC_API_HOST}/api/uploads/${name}`);
+    setFileTitle(name);
+    setOpenDialog(true);
+  };
   return (
     <Fragment>
       <List>
@@ -47,7 +59,16 @@ function FileList({ files, getFiles, deleteFile }) {
                   <ListItemAvatar>
                     <ImageIcon />
                   </ListItemAvatar>
-                  <ListItemText>{name}</ListItemText>
+                  <ListItemText>
+                    <Typography
+                      component={Button}
+                      onClick={() => handleDialogOpen(name)}
+                      variant="body1"
+                      color="secondary"
+                    >
+                      {name}
+                    </Typography>
+                  </ListItemText>
                   <ListItemSecondaryAction>
                     <IconButton onClick={() => handleDelete(name)}>
                       <DeleteIcon />
@@ -67,6 +88,14 @@ function FileList({ files, getFiles, deleteFile }) {
           </ListItem>
         )}
       </List>
+      {openDialog && (
+        <FileDisplayDialog
+          open={openDialog}
+          setOpen={setOpenDialog}
+          url={fileUrl}
+          title={fileTitle}
+        />
+      )}
     </Fragment>
   );
 }
