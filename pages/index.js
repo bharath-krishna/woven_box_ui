@@ -4,6 +4,7 @@ import {
   CardContent,
   Container,
   Grid,
+  Link,
   makeStyles,
   Slide,
   Snackbar,
@@ -111,8 +112,14 @@ function index({ files, setFiles }) {
           <Grid item xs={12} sm={2}>
             <Card className={classes.leftCard}>
               <CardContent>
-                <Typography variant="h6" color="secondary">
-                  Filter by
+                <Typography variant="h6" color="primary">
+                  Sections
+                </Typography>
+                <Typography variant="body1" color="secondary">
+                  <Link href="http://docs.bharathk.in">Documents</Link>
+                </Typography>
+                <Typography variant="body1" color="secondary">
+                  <Link href="/woctl">Download CLI app</Link>
                 </Typography>
               </CardContent>
             </Card>
