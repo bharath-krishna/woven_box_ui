@@ -17,10 +17,13 @@ steps:
   'NEXT_PUBLIC_API_HOST="_SUB_NEXT_PUBLIC_API_HOST"'
   ]
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui']
+  env: 
+  - 'COMMIT_SHA=$COMMIT_SHA'
+  args: ['push', 'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui:$COMMIT_SHA']
 - name: 'gcr.io/cloud-builders/kubectl'
   env: 
   - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
   - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
-  args: ['set', 'image', 'deployment/woven-box-ui', 'woven-box-ui-1=gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui']
+  - 'COMMIT_SHA=$COMMIT_SHA'
+  args: ['--record', 'deployment/woven-box-ui', 'set', 'image', 'deployment/woven-box-ui', 'woven-box-ui-1=gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui:$COMMIT_SHA']
