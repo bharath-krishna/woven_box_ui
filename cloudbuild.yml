@@ -1,0 +1,26 @@
+steps:
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build',
+  '-t',
+  'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui',
+  '.',
+  '--build-arg',
+  'COOKIE_SECRET_PREVIOUS="_SUB_COOKIE_SECRET_PREVIOUS"',
+  '--build-arg',
+  'COOKIE_SECRET_CURRENT="_SUB_COOKIE_SECRET_CURRENT"',
+  '--build-arg',
+  'NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY="_SUB_NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY"',
+  '--build-arg',
+  'NEXT_PUBLIC_FIREBASE_APP_NAME="_SUB_NEXT_PUBLIC_FIREBASE_APP_NAME"',
+  '--build-arg',
+  'NEXT_PUBLIC_API_HOST="_SUB_NEXT_PUBLIC_API_HOST"'
+  ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui']
+- name: 'gcr.io/cloud-builders/kubectl'
+  env: 
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
+  args: ['set', 'image', 'deployment/woven-box-ui', 'woven-box-ui-1=gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui']
