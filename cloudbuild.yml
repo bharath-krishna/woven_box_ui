@@ -16,5 +16,5 @@ steps:
   'NEXT_PUBLIC_API_HOST="_SUB_NEXT_PUBLIC_API_HOST"'
   ]
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'krishbharath/woven_box_ui:latest']
+  args: ['push', 'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui']
 
