@@ -107,6 +107,9 @@ function index({ files, setFiles }) {
   return (
     <React.Fragment>
       <CustomAppBar user={authUser} />
+      <Typography variant="h6" color="primary">
+        Welcome {authUser.email}
+      </Typography>
       <Container className={classes.container}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={2}>
