@@ -1,26 +1,31 @@
+# Google cloud build configuration file
 steps:
-
 - name: 'gcr.io/cloud-builders/docker'
+  env: 
+  - 'COMMIT_SHA=$COMMIT_SHA'
   args: ['build',
   '-t',
-  'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui',
+  'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui:$COMMIT_SHA',
   '.',
   '--build-arg',
-  'COOKIE_SECRET_PREVIOUS="_SUB_COOKIE_SECRET_PREVIOUS"',
+  'COOKIE_SECRET_PREVIOUS=${_COOKIE_SECRET_PREVIOUS}',
   '--build-arg',
-  'COOKIE_SECRET_CURRENT="_SUB_COOKIE_SECRET_CURRENT"',
+  'COOKIE_SECRET_CURRENT=${_COOKIE_SECRET_CURRENT}',
   '--build-arg',
-  'NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY="_SUB_NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY"',
+  'NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY=${_NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY}',
   '--build-arg',
-  'NEXT_PUBLIC_FIREBASE_APP_NAME="_SUB_NEXT_PUBLIC_FIREBASE_APP_NAME"',
+  'NEXT_PUBLIC_FIREBASE_APP_NAME=${_NEXT_PUBLIC_FIREBASE_APP_NAME}',
   '--build-arg',
-  'NEXT_PUBLIC_API_HOST="_SUB_NEXT_PUBLIC_API_HOST"'
+  'NEXT_PUBLIC_API_HOST=${_NEXT_PUBLIC_API_HOST}',
   ]
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui']
-- name: 'gcr.io/cloud-builders/kubectl'
   env: 
+  - 'COMMIT_SHA=$COMMIT_SHA'
+  args: ['push', 'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui:$COMMIT_SHA']
+- name: 'gcr.io/cloud-builders/kubectl'
+  env:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
   - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
-  args: ['set', 'image', 'deployment/woven-box-ui', 'woven-box-ui-1=gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui']
+  - 'COMMIT_SHA=$COMMIT_SHA'
+  args: ['--record', 'deployment/woven-box-ui', 'set', 'image', 'deployment/woven-box-ui', 'woven-box-ui-1=gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui:$COMMIT_SHA']
