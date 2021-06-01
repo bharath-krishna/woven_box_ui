@@ -2,7 +2,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build',
   '-t',
-  'gcr.io/my-project-id/myimage',
+  'krishbharath/woven_box_ui:latest',
   '.',
   '--build-arg',
   'COOKIE_SECRET_PREVIOUS="_SUB_COOKIE_SECRET_PREVIOUS"',
