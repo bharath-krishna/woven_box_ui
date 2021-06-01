@@ -15,3 +15,6 @@ steps:
   '--build-arg',
   'NEXT_PUBLIC_API_HOST="_SUB_NEXT_PUBLIC_API_HOST"'
   ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'krishbharath/woven_box_ui:latest']
+
