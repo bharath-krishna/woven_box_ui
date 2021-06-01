@@ -1,4 +1,5 @@
 steps:
+
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build',
   '-t',
@@ -18,4 +19,8 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui']
 - name: 'gcr.io/cloud-builders/kubectl'
+  env: 
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
+  - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
   args: ['set', 'image', 'deployment/woven-box-ui', 'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui']
