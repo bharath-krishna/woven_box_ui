@@ -2,7 +2,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build',
   '-t',
-  'krishbharath/woven_box_ui:latest',
+  'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui',
   '.',
   '--build-arg',
   'COOKIE_SECRET_PREVIOUS="_SUB_COOKIE_SECRET_PREVIOUS"',
