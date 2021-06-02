@@ -1,0 +1,380 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: woven-box-ui
+  managedFields:
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:app': {}
+        'f:spec':
+          'f:progressDeadlineSeconds': {}
+          'f:replicas': {}
+          'f:revisionHistoryLimit': {}
+          'f:selector':
+            'f:matchLabels':
+              .: {}
+              'f:app': {}
+          'f:strategy':
+            'f:rollingUpdate':
+              .: {}
+              'f:maxSurge': {}
+              'f:maxUnavailable': {}
+            'f:type': {}
+          'f:template':
+            'f:metadata':
+              'f:labels':
+                .: {}
+                'f:app': {}
+            'f:spec':
+              'f:containers':
+                'k:{"name":"woven-box-ui-1"}':
+                  .: {}
+                  'f:env':
+                    .: {}
+                    'k:{"name":"COOKIE_SECRET_CURRENT"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"COOKIE_SECRET_PREVIOUS"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"FIREBASE_CLIENT_EMAIL"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"FIREBASE_PRIVATE_KEY"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"NEXT_PUBLIC_API_HOST"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"NEXT_PUBLIC_COOKIE_SECURE"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"NEXT_PUBLIC_FIREBASE_APP_NAME"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"NEXT_PUBLIC_FIREBASE_DATABASE_URL"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"NEXT_PUBLIC_FIREBASE_PROJECT_ID"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                    'k:{"name":"NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:configMapKeyRef':
+                          .: {}
+                          'f:key': {}
+                          'f:name': {}
+                  'f:image': {}
+                  'f:imagePullPolicy': {}
+                  'f:name': {}
+                  'f:resources': {}
+                  'f:terminationMessagePath': {}
+                  'f:terminationMessagePolicy': {}
+              'f:dnsPolicy': {}
+              'f:restartPolicy': {}
+              'f:schedulerName': {}
+              'f:securityContext': {}
+              'f:terminationGracePeriodSeconds': {}
+              'f:tolerations': {}
+      manager: GoogleCloudConsole
+      operation: Update
+      time: '2021-05-30T11:04:16Z'
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:deployment.kubernetes.io/revision': {}
+        'f:status':
+          'f:availableReplicas': {}
+          'f:conditions':
+            .: {}
+            'k:{"type":"Available"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Progressing"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+          'f:observedGeneration': {}
+          'f:readyReplicas': {}
+          'f:replicas': {}
+          'f:updatedReplicas': {}
+      manager: kube-controller-manager
+      operation: Update
+      time: '2021-06-01T03:02:48Z'
+  name: woven-box-ui
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: woven-box-ui
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: woven-box-ui
+    spec:
+      containers:
+        - env:
+            - name: NEXT_PUBLIC_API_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: NEXT_PUBLIC_API_HOST
+                  name: woven-box-ui-config-nacf
+            - name: FIREBASE_CLIENT_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  key: FIREBASE_CLIENT_EMAIL
+                  name: woven-box-ui-config-nacf
+            - name: NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY
+                  name: woven-box-ui-config-nacf
+            - name: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+                  name: woven-box-ui-config-nacf
+            - name: NEXT_PUBLIC_FIREBASE_DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: NEXT_PUBLIC_FIREBASE_DATABASE_URL
+                  name: woven-box-ui-config-nacf
+            - name: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+                  name: woven-box-ui-config-nacf
+            - name: FIREBASE_PRIVATE_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: FIREBASE_PRIVATE_KEY
+                  name: woven-box-ui-config-nacf
+            - name: COOKIE_SECRET_CURRENT
+              valueFrom:
+                configMapKeyRef:
+                  key: COOKIE_SECRET_CURRENT
+                  name: woven-box-ui-config-nacf
+            - name: COOKIE_SECRET_PREVIOUS
+              valueFrom:
+                configMapKeyRef:
+                  key: COOKIE_SECRET_PREVIOUS
+                  name: woven-box-ui-config-nacf
+            - name: NEXT_PUBLIC_COOKIE_SECURE
+              valueFrom:
+                configMapKeyRef:
+                  key: NEXT_PUBLIC_COOKIE_SECURE
+                  name: woven-box-ui-config-nacf
+            - name: NEXT_PUBLIC_FIREBASE_APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: NEXT_PUBLIC_FIREBASE_APP_NAME
+                  name: woven-box-ui-config-nacf
+          image: gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui
+          imagePullPolicy: Always
+          name: woven-box-ui-1
+      tolerations:
+        - effect: NoSchedule
+          key: nodeFor
+          operator: Equal
+          value: wovenBoxApi
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    app: woven-box-ui
+  managedFields:
+    - apiVersion: autoscaling/v2beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:app': {}
+        'f:spec':
+          'f:maxReplicas': {}
+          'f:metrics': {}
+          'f:minReplicas': {}
+          'f:scaleTargetRef':
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+      manager: GoogleCloudConsole
+      operation: Update
+      time: '2021-05-29T08:36:10Z'
+    - apiVersion: autoscaling/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:autoscaling.alpha.kubernetes.io/conditions': {}
+            'f:autoscaling.alpha.kubernetes.io/current-metrics': {}
+        'f:status':
+          'f:currentCPUUtilizationPercentage': {}
+          'f:currentReplicas': {}
+          'f:desiredReplicas': {}
+      manager: vpa-recommender
+      operation: Update
+      time: '2021-05-31T04:41:35Z'
+  name: woven-box-ui-hpa-6uvh
+  namespace: default
+spec:
+  maxReplicas: 5
+  metrics:
+    - resource:
+        name: cpu
+        targetAverageUtilization: 80
+      type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: woven-box-ui
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":true}'
+    cloud.google.com/neg-status: >-
+      {"network_endpoint_groups":{"80":"k8s1-24c3500b-default-woven-box-ui-service-80-c6c6b6e5"},"zones":["us-central1-c"]}
+  labels:
+    app: woven-box-ui
+  managedFields:
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:app': {}
+        'f:spec':
+          'f:externalTrafficPolicy': {}
+          'f:ports':
+            .: {}
+            'k:{"port":80,"protocol":"TCP"}':
+              .: {}
+              'f:port': {}
+              'f:protocol': {}
+              'f:targetPort': {}
+          'f:selector':
+            .: {}
+            'f:app': {}
+          'f:sessionAffinity': {}
+          'f:type': {}
+      manager: GoogleCloudConsole
+      operation: Update
+      time: '2021-05-29T08:37:36Z'
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:cloud.google.com/neg-status': {}
+      manager: glbc
+      operation: Update
+      time: '2021-05-29T13:11:07Z'
+  name: woven-box-ui-service
+  namespace: default
+spec:
+  clusterIP: 10.8.14.81
+  externalTrafficPolicy: Cluster
+  ports:
+    - nodePort: 30511
+      port: 80
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app: woven-box-ui
+  sessionAffinity: None
+  type: NodePort

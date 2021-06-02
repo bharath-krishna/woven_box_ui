@@ -4,6 +4,7 @@ import {
   CardContent,
   Container,
   Grid,
+  Link,
   makeStyles,
   Slide,
   Snackbar,
@@ -12,7 +13,6 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import CustomAppBar from "../components/CustomAppBar";
 import FileList from "../components/FileList";
 import { Alert } from "@material-ui/lab";
@@ -24,6 +24,7 @@ import {
   withAuthUser,
 } from "../utils/NextFirebaseAuth";
 import FullPageLoader from "../components/FullPageLoader";
+import UploadFIles from "../components/UploadFIles";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -32,7 +33,7 @@ const useStyles = makeStyles(() => ({
     paddingTop: "5vh",
   },
   input: {
-    display: "flex",
+    display: "none",
     width: "200px",
   },
   leftCard: {
@@ -44,7 +45,6 @@ const useStyles = makeStyles(() => ({
 function index({ files, setFiles }) {
   const authUser = useAuthUser();
   const classes = useStyles();
-  const { register, handleSubmit, reset } = useForm();
   const [open, setOpen] = React.useState(false);
   const [transition, setTransition] = React.useState(undefined);
   const [severity, setSeverity] = useState("success");
@@ -70,31 +70,14 @@ function index({ files, setFiles }) {
       });
   };
 
-  const onSubmit = async (data) => {
-    const formData = new FormData();
-    formData.append("uploaded_files", data.filename[0]);
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${await authUser.getIdToken()}`,
-      },
-    };
-    const resp = await axios
-      .post(`${process.env.NEXT_PUBLIC_API_HOST}/api/uploads`, formData, config)
-      .then((res) => {
-        if (res.status == 200) {
-          showMessage("Upload Successful");
-          reset();
-          getFiles();
-        }
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
+  const resetFiles = () => {
+    // TODO: Reset files list in redux state
+    // instead of fetchin from server
+    getFiles();
   };
 
   function TransitionRight(props) {
-    return <Slide {...props} direction="right" />;
+    return <Slide {...props} direction="right" timeout={1000} />;
   }
 
   const showMessage = (msg, severity) => {
@@ -124,13 +107,22 @@ function index({ files, setFiles }) {
   return (
     <React.Fragment>
       <CustomAppBar user={authUser} />
+      <Typography variant="h6" color="primary">
+        Welcome {authUser.email}
+      </Typography>
       <Container className={classes.container}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={2}>
             <Card className={classes.leftCard}>
               <CardContent>
-                <Typography variant="h6" color="secondary">
-                  Filter by
+                <Typography variant="h6" color="primary">
+                  Sections
+                </Typography>
+                <Typography variant="body1" color="secondary">
+                  <Link href="http://docs.bharathk.in">Documents</Link>
+                </Typography>
+                <Typography variant="body1" color="secondary">
+                  <Link href="/woctl">Download CLI app</Link>
                 </Typography>
               </CardContent>
             </Card>
@@ -147,15 +139,7 @@ function index({ files, setFiles }) {
             <FileList getFiles={getFiles} />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <input
-                {...register("filename")}
-                type="file"
-                className={classes.input}
-                required
-              />
-              <Button type="submit">Upload</Button>
-            </form>
+            <UploadFIles showMessage={showMessage} resetFiles={resetFiles} />
           </Grid>
         </Grid>
       </Container>
