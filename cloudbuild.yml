@@ -5,7 +5,7 @@ steps:
   - 'COMMIT_SHA=$COMMIT_SHA'
   args: ['build',
   '-t',
-  'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui:$COMMIT_SHA',
+  'gcr.io/huddl-ai/github.com/bharath-krishna/my_box_ui:$COMMIT_SHA',
   '.',
   '--build-arg',
   'COOKIE_SECRET_PREVIOUS=${_COOKIE_SECRET_PREVIOUS}',
@@ -21,11 +21,11 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   env: 
   - 'COMMIT_SHA=$COMMIT_SHA'
-  args: ['push', 'gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui:$COMMIT_SHA']
+  args: ['push', 'gcr.io/huddl-ai/github.com/bharath-krishna/my_box_ui:$COMMIT_SHA']
 - name: 'gcr.io/cloud-builders/kubectl'
   env:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1-c'
   - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
   - 'CLOUDSDK_CONTAINER_CLUSTER=cluster-1'
   - 'COMMIT_SHA=$COMMIT_SHA'
-  args: ['--record', 'deployment/woven-box-ui', 'set', 'image', 'deployment/woven-box-ui', 'woven-box-ui-1=gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui:$COMMIT_SHA']
+  args: ['--record', 'deployment/my-box-ui', 'set', 'image', 'deployment/my-box-ui', 'my-box-ui-1=gcr.io/huddl-ai/github.com/bharath-krishna/my_box_ui:$COMMIT_SHA']

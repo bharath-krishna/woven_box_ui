@@ -26,11 +26,11 @@ function Auth() {
         <Grid container direction="column">
           <Grid item>
             <Typography variant="h3" color="primary">
-              Welcome to Woven Box
+              Welcome to My Box
             </Typography>
             <Typography variant="subtitle1" color="secondary">
-              Use your google account to signin. If its first time signing in
-              then click on "Trouble Signing in" and follow the instructions
+              Use your These creds for testing Username: test.user@newtest.com,
+              Password: n#wt3St
             </Typography>
           </Grid>
           <Grid item>
