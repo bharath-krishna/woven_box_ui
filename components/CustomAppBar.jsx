@@ -38,7 +38,7 @@ function CustomAppBar({ logoutUser }) {
       <AppBar>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Woven Box
+            My Box
           </Typography>
           <Button color="inherit" onClick={handleLogout}>
             Logout

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: woven-box-ui
+    app: my-box-ui
   managedFields:
     - apiVersion: apps/v1
       fieldsType: FieldsV1
@@ -32,7 +32,7 @@ metadata:
                 'f:app': {}
             'f:spec':
               'f:containers':
-                'k:{"name":"woven-box-ui-1"}':
+                'k:{"name":"my-box-ui-1"}':
                   .: {}
                   'f:env':
                     .: {}
@@ -184,13 +184,13 @@ metadata:
       manager: kube-controller-manager
       operation: Update
       time: '2021-06-01T03:02:48Z'
-  name: woven-box-ui
+  name: my-box-ui
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: woven-box-ui
+      app: my-box-ui
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -199,7 +199,7 @@ spec:
   template:
     metadata:
       labels:
-        app: woven-box-ui
+        app: my-box-ui
     spec:
       containers:
         - env:
@@ -207,71 +207,71 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: NEXT_PUBLIC_API_HOST
-                  name: woven-box-ui-config-nacf
+                  name: my-box-ui-config-nacf
             - name: FIREBASE_CLIENT_EMAIL
               valueFrom:
                 configMapKeyRef:
                   key: FIREBASE_CLIENT_EMAIL
-                  name: woven-box-ui-config-nacf
+                  name: my-box-ui-config-nacf
             - name: NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY
               valueFrom:
                 configMapKeyRef:
                   key: NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY
-                  name: woven-box-ui-config-nacf
+                  name: my-box-ui-config-nacf
             - name: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
               valueFrom:
                 configMapKeyRef:
                   key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-                  name: woven-box-ui-config-nacf
+                  name: my-box-ui-config-nacf
             - name: NEXT_PUBLIC_FIREBASE_DATABASE_URL
               valueFrom:
                 configMapKeyRef:
                   key: NEXT_PUBLIC_FIREBASE_DATABASE_URL
-                  name: woven-box-ui-config-nacf
+                  name: my-box-ui-config-nacf
             - name: NEXT_PUBLIC_FIREBASE_PROJECT_ID
               valueFrom:
                 configMapKeyRef:
                   key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
-                  name: woven-box-ui-config-nacf
+                  name: my-box-ui-config-nacf
             - name: FIREBASE_PRIVATE_KEY
               valueFrom:
                 configMapKeyRef:
                   key: FIREBASE_PRIVATE_KEY
-                  name: woven-box-ui-config-nacf
+                  name: my-box-ui-config-nacf
             - name: COOKIE_SECRET_CURRENT
               valueFrom:
                 configMapKeyRef:
                   key: COOKIE_SECRET_CURRENT
-                  name: woven-box-ui-config-nacf
+                  name: my-box-ui-config-nacf
             - name: COOKIE_SECRET_PREVIOUS
               valueFrom:
                 configMapKeyRef:
                   key: COOKIE_SECRET_PREVIOUS
-                  name: woven-box-ui-config-nacf
+                  name: my-box-ui-config-nacf
             - name: NEXT_PUBLIC_COOKIE_SECURE
               valueFrom:
                 configMapKeyRef:
                   key: NEXT_PUBLIC_COOKIE_SECURE
-                  name: woven-box-ui-config-nacf
+                  name: my-box-ui-config-nacf
             - name: NEXT_PUBLIC_FIREBASE_APP_NAME
               valueFrom:
                 configMapKeyRef:
                   key: NEXT_PUBLIC_FIREBASE_APP_NAME
-                  name: woven-box-ui-config-nacf
-          image: gcr.io/huddl-ai/github.com/bharath-krishna/woven_box_ui
+                  name: my-box-ui-config-nacf
+          image: gcr.io/huddl-ai/github.com/bharath-krishna/my_box_ui
           imagePullPolicy: Always
-          name: woven-box-ui-1
+          name: my-box-ui-1
       tolerations:
         - effect: NoSchedule
           key: nodeFor
           operator: Equal
-          value: wovenBoxApi
+          value: myBoxApi
 ---
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
-    app: woven-box-ui
+    app: my-box-ui
   managedFields:
     - apiVersion: autoscaling/v2beta1
       fieldsType: FieldsV1
@@ -306,7 +306,7 @@ metadata:
       manager: vpa-recommender
       operation: Update
       time: '2021-05-31T04:41:35Z'
-  name: woven-box-ui-hpa-6uvh
+  name: my-box-ui-hpa-6uvh
   namespace: default
 spec:
   maxReplicas: 5
@@ -319,7 +319,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: woven-box-ui
+    name: my-box-ui
 ---
 apiVersion: v1
 kind: Service
@@ -327,9 +327,9 @@ metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":true}'
     cloud.google.com/neg-status: >-
-      {"network_endpoint_groups":{"80":"k8s1-24c3500b-default-woven-box-ui-service-80-c6c6b6e5"},"zones":["us-central1-c"]}
+      {"network_endpoint_groups":{"80":"k8s1-24c3500b-default-my-box-ui-service-80-c6c6b6e5"},"zones":["us-central1-c"]}
   labels:
-    app: woven-box-ui
+    app: my-box-ui
   managedFields:
     - apiVersion: v1
       fieldsType: FieldsV1
@@ -364,7 +364,7 @@ metadata:
       manager: glbc
       operation: Update
       time: '2021-05-29T13:11:07Z'
-  name: woven-box-ui-service
+  name: my-box-ui-service
   namespace: default
 spec:
   clusterIP: 10.8.14.81
@@ -375,6 +375,6 @@ spec:
       protocol: TCP
       targetPort: 3000
   selector:
-    app: woven-box-ui
+    app: my-box-ui
   sessionAffinity: None
   type: NodePort
